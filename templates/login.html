@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 26px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="text"].password-visible {
+            background-color: #fffacd; /* pale yellow */
+            width: 100%;
+            padding: 10px;
+            font-size: 15px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 6px rgba(76, 175, 80, 0.4);
+            outline: none;
+        }
+
+        input.password-visible {
+            background-color: #fffacd; /* same as others */
+            border-color: #4CAF50; /* green border when visible */
+            box-shadow: 0 0 6px rgba(76, 175, 80, 0.4);
+        }
+
+        .password-box {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 16px;
+            color: #888;
+        }
+
+        .material-icons {
+            user-select: none;
+        }
+
+        button {
+            margin-top: 25px;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .link a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
+        }
+
+        .result-card p {
+            margin-top: 15px;
+            background-color: #ffe4e1;
+            padding: 10px;
+            border-radius: 6px;
+            color: #d8000c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome Back</h1>
+        <form method="POST">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required>
+
+            <label for="password">Password</label>
+            <div class="password-box">
+                <input type="password" name="password" id="password" required>
+                <span class="material-icons toggle-password" onclick="togglePassword()" id="toggleIcon">visibility_off</span>
+            </div>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <div class="link">
+            Don't have an account? <a href="{{ url_for('signup') }}">Sign up here</a>.
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="result-card">
+              {% for message in messages %}
+                <p>{{ message }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+    </div>
+
+    <script>
+        function togglePassword() {
+        const input = document.getElementById("password");
+        const icon = document.getElementById("toggleIcon");
+
+        if (input.type === "password") {
+            input.type = "text";
+            input.classList.add("password-visible");
+            icon.textContent = "visibility";
+        } else {
+            input.type = "password";
+            input.classList.remove("password-visible");
+            icon.textContent = "visibility_off";
+        }
+    }
+
+    </script>
+</body>
+</html>
